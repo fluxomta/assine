@@ -35,6 +35,10 @@ wp-config.php
 # htaccess
 /.htaccess
 
+# Vendor
+/vendor
+composer.lock
+
 # All plugins
 #
 # Note: If you wish to whitelist plugins,
