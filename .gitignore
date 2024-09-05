@@ -10,6 +10,8 @@
 /wp-content/languages
 /wp-content/plugins/index.php
 /wp-content/themes/index.php
+/wp-content/themes/fluxo-mta/node_modules
+/wp-content/themes/fluxo-mta/package-lock.json
 /wp-includes/
 /index.php
 /license.txt

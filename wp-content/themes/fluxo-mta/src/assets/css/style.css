@@ -1,0 +1,215 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+@layer base {
+    html {
+        font-family: "Montserrat", system-ui, sans-serif;
+        @apply bg-gray-100;
+    }
+}
+
+body {
+    font-family: "Montserrat", system-ui, sans-serif !important;
+    @apply bg-gray-100;
+}
+
+.woocommerce {
+    @apply gap-8 p-4 border rounded-lg shadow-inner border-secondary-800 bg-primary-700;
+}
+
+.woocommerce-notices-wrapper {
+    @apply w-full col-span-6;
+}
+
+.e-checkout__container {
+    @apply grid grid-cols-6 !important;
+}
+
+.e-checkout__column.e-checkout__column-start {
+    @apply col-span-3;
+}
+
+.e-checkout__column.e-checkout__column-end {
+    @apply col-span-3;
+}
+
+/* LOGIN */
+
+.e-woocommerce-login-section {
+    @apply w-full bg-primary-500 border border-primary-400 !important;
+}
+
+.woocommerce-form-login-toggle.e-checkout-secondary-title {
+    @apply text-white !important;
+}
+
+.e-woocommerce-login-section .e-show-login {
+    @apply text-secondary-400 hover:text-secondary-500 hover:underline;
+}
+
+/* Faturamento */
+#customer_details .col-1 {
+    @apply w-full bg-primary-500 border border-primary-400 p-4 !important;
+}
+
+.woocommerce-billing-fields h3 {
+    @apply m-0 pb-1 text-2xl font-semibold text-white border-b border-secondary-800 !important;
+}
+
+.woocommerce-billing-fields__field-wrapper {
+    @apply grid grid-cols-2 mt-4;
+}
+
+
+
+
+.input-text {
+    @apply w-full px-3 py-2 text-white transition-all duration-300 border rounded bg-primary-600 focus:outline-none focus:bg-secondary-50 focus:text-primary-500 focus:ring-0 focus:ring-primary-200 !important;
+}
+
+.woocommerce-billing-fields__field-wrapper p label {
+    @apply text-sm text-gray-400;
+}
+
+/* INPUTS */
+#billing_first_name_field,
+#billing_last_name_field,
+#billing_postcode_field,
+#billing_address_1_field,
+#billing_city_field,
+#billing_state_field,
+#billing_phone_field,
+#billing_cnpj_field,
+#billing_company_field,
+#billing_cpf_field,
+#billing_email_field,
+#custom_account_password_field {
+    @apply w-full col-span-1 px-2 !important;
+}
+
+#billing_persontype_field {
+    @apply w-full col-span-2 !important;
+}
+
+#billing_persontype {
+    @apply text-white bg-primary-500;
+}
+
+/* Estilizando a Tabela */
+.shop_table.woocommerce-checkout-review-order-table {
+    @apply p-2 text-left text-white rounded-lg border !important;
+}
+
+.shop_table.woocommerce-checkout-review-order-table th,
+.shop_table.woocommerce-checkout-review-order-table td {
+    @apply p-3;
+}
+
+.shop_table.woocommerce-checkout-review-order-table th {
+    @apply font-semibold bg-primary-600;
+}
+
+.shop_table.woocommerce-checkout-review-order-table td {
+    @apply bg-primary-700;
+}
+
+/* Destaque no Total */
+.shop_table.woocommerce-checkout-review-order-table .order-total {
+    @apply text-white bg-secondary-100;
+}
+
+div#payment {
+    @apply bg-primary-500 p-0.5 text-white !important;
+}
+
+.payment_box.payment_method_stripe {
+    @apply bg-primary-400 text-white overflow-hidden rounded-md shadow-inner !important;
+}
+
+img.stripe-cards-icon.stripe-icon,
+#add_payment_method #payment div.payment_box::before,
+.woocommerce-cart #payment div.payment_box::before,
+.woocommerce-checkout #payment div.payment_box::before {
+    @apply hidden;
+}
+
+button#place_order {
+    @apply w-full px-2 py-4 text-lg font-bold border-0 rounded-lg bg-secondary-500 text-primary-500 hover:bg-secondary-700;
+}
+
+.woocommerce-terms-and-conditions-link {
+    @apply text-secondary-500;
+}
+
+
+/* Customização dos blocos do checkout */
+.checkout-section {
+    background-color: #1e1e1e;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.checkout-section h3 {
+    color: #ffc107;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+}
+
+/* Blocos específicos */
+#customer_details {
+    display: flex;
+    flex-direction: column;
+}
+
+#order_review_heading {
+    display: none;
+}
+
+.woocommerce-checkout #order_review {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.woocommerce-checkout #payment {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.woocommerce-checkout #payment h3 {
+    margin-bottom: 10px;
+}
+
+/* Botão de Assinar */
+#place_order {
+    background-color: #ffc107;
+    color: #000;
+    padding: 15px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#place_order:hover {
+    background-color: #ffb300;
+}
+
+/* Oferta Especial */
+.special-offer {
+    background-color: #202020;
+    padding: 20px;
+    border-radius: 10px;
+    color: #fff;
+    margin-top: 20px;
+}
+
+.special-offer h3 {
+    color: #ffc107;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+}
