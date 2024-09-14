@@ -1,4 +1,4 @@
-name: assine
+name: assinantes
 recipe: wordpress
 config:
   php: '8.1'
@@ -12,7 +12,7 @@ services:
     type: php:8.1
     via: apache
     webroot: .
-    ssl: true  
+    ssl: true  # Habilita SSL para o appserver
   mailhog:
     type: mailhog
     hogfrom:
@@ -24,8 +24,11 @@ services:
 
 proxy:
   appserver:
-    - assine.lndo.site
+    - assinantes.lndo.site
+    - assinantes.lndo.site:443
   mailhog:
-    - mail.assine.lndo.site
+    - mail.assinantes.lndo.site
+    - mail.assinantes.lndo.site:443
   pma:
-    - pma.assine.lndo.site
+    - pma.assinantes.lndo.site
+    - pma.assinantes.lndo.site:443
