@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Hidden itens */
+.storefront-breadcrumb{
+    @apply hidden;
+}
+
+/* Padrões */
+.black-gradient {
+    @apply bg-gradient-to-r from-primary-500 to-primary-400;
+}
+.site-content{
+    @apply bg-white;
+}
+#content{
+    @apply pt-12;
+}
+.col-full{
+    @apply max-w-6xl p-0 !important;
+}
+.site-main{
+    @apply mb-0;
+}
+.hentry{
+    @apply mb-0;
+}
+
+.custom-logo-link{
+    @apply m-0;
+}
+.entry-header{
+    @apply pb-8 text-left !important;
+}
+.entry-title{
+    @apply text-4xl font-bold text-primary-500 p-0;
+}
+
+.storefront-align-wide.page-template-template-fullwidth-php .hentry .entry-content .alignwide, .storefront-align-wide.storefront-full-width-content .hentry .entry-content .alignwide{
+    @apply w-full mx-auto rounded-md text-primary-500 border shadow-md p-8;
+}
+
+.woocommerce-order-received .entry-header{
+    @apply hidden;
+}
+
+/* checkout */
+.woocommerce-billing-fields h3{
+    @apply text-primary-500 text-2xl font-bold;
+}
+/* INPUTS CHECKOUT */
+
+.woocommerce-billing-fields__field-wrapper label {
+    @apply text-lg text-gray-600;
+}
+.woocommerce-billing-fields__field-wrapper input{
+    @apply w-full px-3 py-2 text-gray-700 transition-all duration-300 border rounded bg-slate-100 focus:outline-none focus:bg-secondary-50 focus:ring-0 focus:ring-primary-200 focus:ring-opacity-50;
+}
+
+p#billing_number_field,
+p#billing_persontype_field,
+p#billing_country_field,
+p#billing_state_field{
+    @apply mb-4;
+}
+
+
+.btn-large {
+    @apply px-8 py-3 font-semibold text-xl uppercase transition-all duration-500 border rounded-sm border-primary-400 text-primary-700 bg-secondary-500 hover:bg-secondary-400 hover:border-primary-500 scale-100 hover:scale-110
+}
+
+/* Order */
+.order_details{
+    @apply bg-primary-500 text-white !important;
+}
+.order_details:before, .order_details:after{
+    background: -webkit-linear-gradient(transparent 0, transparent 0), -webkit-linear-gradient(135deg, #1f1f1f 33.33%, transparent 33.33%), -webkit-linear-gradient(45deg, #1f1f1f 33.33%, transparent 33.33%) !important;
+    background-size: 0 100%, 16px 16px, 16px 16px !important;
+}

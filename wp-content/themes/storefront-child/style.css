@@ -1,0 +1,14 @@
+/*
+Theme Name: Storefront Child
+Theme URI: https://seusite.com/storefront-child
+Description: Tema filho do tema Storefront
+Author: Seu Nome
+Author URI: https://seusite.com
+Template: storefront
+Version: 1.0.1
+Text Domain: storefront-child
+*/
+
+/* Importa os estilos do tema pai */
+@import url("../storefront/style.css");
+
