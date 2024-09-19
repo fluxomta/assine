@@ -78,3 +78,19 @@ p#billing_state_field{
     background: -webkit-linear-gradient(transparent 0, transparent 0), -webkit-linear-gradient(135deg, #1f1f1f 33.33%, transparent 33.33%), -webkit-linear-gradient(45deg, #1f1f1f 33.33%, transparent 33.33%) !important;
     background-size: 0 100%, 16px 16px, 16px 16px !important;
 }
+
+.alert-bg{
+    @apply pt-4 pb-2 rounded-t-md !important;
+}
+.woocommerce-account-fields{
+    @apply mt-0 pt-4 pb-4 rounded-b-md !important;
+}
+.alert-bg,
+.woocommerce-account-fields{
+    @apply px-4 mt-6 bg-secondary-500 text-primary-500;
+}
+
+#billing_email,
+#account_password{
+    @apply w-full px-3 py-2 text-gray-700 transition-all duration-300 border rounded bg-secondary-100 focus:outline-none focus:bg-secondary-50 focus:ring-0 focus:ring-primary-200 focus:ring-opacity-50;
+}

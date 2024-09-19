@@ -71,25 +71,15 @@ function generate_jwt_for_user($user) {
         return new WP_Error('invalid_user', 'Usuário inválido.', array('status' => 400));
     }
 
-    // Verificar se o usuário tem assinaturas ativas e obter a data da próxima expiração
-    $subscriptions = wcs_get_users_subscriptions($user->ID);
-    $has_active_subscription = false;
-    $next_expiration_date = null;
-
-    foreach ($subscriptions as $subscription) {
-        if ($subscription->has_status('active')) {
-            $has_active_subscription = true;
-            $next_expiration_date = $subscription->get_date('next_payment');
-            break;
-        }
-    }
-
     // Buscar os metadados necessários
     $nivel_assinatura = get_user_meta($user->ID, 'nivel_assinatura', true);
-    $speed_flow = get_user_meta($user->ID, 'speed_flow', true);
-    $liquidity_tracker = get_user_meta($user->ID, 'liquidity_tracker', true);
-    $master_flow = get_user_meta($user->ID, 'master_flow', true);
-    $target_vision = get_user_meta($user->ID, 'target_vision', true);
+    $sku_01 = get_user_meta($user->ID, 'sku_01', true);
+    $sku_02 = get_user_meta($user->ID, 'sku_02', true);
+    $sku_03 = get_user_meta($user->ID, 'sku_03', true);
+    $sku_04 = get_user_meta($user->ID, 'sku_04', true);
+    $sku_05 = get_user_meta($user->ID, 'sku_05', true);
+    $sku_06 = get_user_meta($user->ID, 'sku_06', true);
+    $sku_07 = get_user_meta($user->ID, 'sku_07', true);
 
     // Gerar o token JWT com informações adicionais
     $token = array(
@@ -102,13 +92,14 @@ function generate_jwt_for_user($user) {
                 'id' => $user->ID,
                 'username' => $user->user_login,
                 'email' => $user->user_email,
-                'has_active_subscription' => $has_active_subscription,
-                'next_expiration_date' => $next_expiration_date,
-                'nivel_assinatura' => $nivel_assinatura, 
-                'speed_flow' => $speed_flow, 
-                'liquidity_tracker' => $liquidity_tracker, 
-                'master_flow' => $master_flow, 
-                'target_vision' => $target_vision, 
+                'nivel_assinatura' => $nivel_assinatura,
+                'sku_01' => $sku_01,
+                'sku_02' => $sku_02,
+                'sku_03' => $sku_03,
+                'sku_04' => $sku_04,
+                'sku_05' => $sku_05,
+                'sku_06' => $sku_06,
+                'sku_07' => $sku_07,
             ),
         ),
     );
@@ -117,41 +108,6 @@ function generate_jwt_for_user($user) {
 
     return $jwt;
 }
-
-// Função para criar o cookie JWT em qualquer login bem-sucedido
-function set_jwt_cookie_on_login($user_login, $user) {
-    // Gere o token JWT para o usuário que acabou de fazer login
-    $token = generate_jwt_for_user($user);
-
-    // Verifique se houve um erro ao gerar o token JWT
-    if (is_wp_error($token)) {
-        error_log('Erro ao gerar JWT: ' . $token->get_error_message());
-        return;
-    }
-
-    // Defina o cookie com o JWT para o domínio principal e todos os subdomínios
-    setcookie('jwt_token', $token, time() + (7 * DAY_IN_SECONDS), '/', '.fluxomta.com', true, false); // Defina 'httponly' como false
-}
-add_action('wp_login', 'set_jwt_cookie_on_login', 10, 2);
-
-
-// Adiciona o script para armazenar o token JWT no localStorage
-function add_jwt_localstorage_script() {
-    if (is_user_logged_in() && isset($_COOKIE['jwt_token'])) {
-        ?>
-        <script type="text/javascript">
-            document.addEventListener('DOMContentLoaded', function () {
-                const jwtToken = "<?php echo esc_js($_COOKIE['jwt_token']); ?>";
-                if (jwtToken) {
-                    localStorage.setItem('token', jwtToken);
-                    console.log('Token JWT armazenado no localStorage');
-                }
-            });
-        </script>
-        <?php
-    }
-}
-add_action('wp_footer', 'add_jwt_localstorage_script');
 
 // ==========================================
 // Endpoint Customizado para Login
@@ -185,65 +141,41 @@ function custom_login(WP_REST_Request $request) {
         return $token;
     }
 
+    // Obter as informações do usuário
+    $user_data = array(
+        'id' => $user->ID,
+        'username' => $user->user_login,
+        'email' => $user->user_email,
+        'first_name' => get_user_meta($user->ID, 'billing_first_name', true),
+        'last_name' => get_user_meta($user->ID, 'billing_last_name', true),
+        'billing_cpf' => get_user_meta($user->ID, 'billing_cpf', true),
+        'billing_cnpj' => get_user_meta($user->ID, 'billing_cnpj', true),
+        'billing_persontype' => get_user_meta($user->ID, 'billing_persontype', true),
+        'avatar_url' => get_avatar_url($user->ID),
+        'role' => $user->roles[0],
+        'indicadores' => array(
+            'nivel_assinatura' => get_user_meta($user->ID, 'nivel_assinatura', true),
+            'sku_01' => get_user_meta($user->ID, 'sku_01', true),
+            'sku_02' => get_user_meta($user->ID, 'sku_02', true),
+            'sku_03' => get_user_meta($user->ID, 'sku_03', true),
+            'sku_04' => get_user_meta($user->ID, 'sku_04', true),
+            'sku_05' => get_user_meta($user->ID, 'sku_05', true),
+            'sku_06' => get_user_meta($user->ID, 'sku_06', true),
+            'sku_07' => get_user_meta($user->ID, 'sku_07', true),
+        ),
+    );
+
     // Retorne a resposta do REST com o token JWT e detalhes do usuário
     return rest_ensure_response(array(
         'token' => $token,
         'user_email' => $user->user_email,
         'user_nicename' => $user->user_nicename,
         'user_display_name' => $user->display_name,
-        'redirect_url' => home_url() // Redireciona para a home após login, se necessário
+        'redirect_url' => home_url(),
+        'user_data' => $user_data // Enviando as informações do usuário separadas
     ));
 }
 
-// ==========================================
-// Endpoint Customizado para Verificar o Status de Login
-// ==========================================
-add_action('rest_api_init', function () {
-    register_rest_route('custom/v1', '/check-login', array(
-        'methods' => 'GET',
-        'callback' => 'check_user_login_status',
-        'permission_callback' => '__return_true' // Permitir que qualquer um acesse o endpoint
-    ));
-});
-
-function check_user_login_status(WP_REST_Request $request) {
-    // Verifica se o cookie de login está presente
-    if (isset($_COOKIE['jwt_token'])) {
-        $user = wp_get_current_user();
-
-        // Verifica se o usuário é autenticado
-        if ($user && $user->ID) {
-            // Gerar o token JWT para o usuário autenticado
-            $token = generate_jwt_for_user($user);
-
-            if (is_wp_error($token)) {
-                return new WP_Error('jwt_generation_error', 'Erro ao gerar token JWT.', array('status' => 500));
-            }
-
-            return rest_ensure_response(array(
-                'logged_in' => true,
-                'user_id' => $user->ID,
-                'user_email' => $user->user_email,
-                'message' => 'Usuário autenticado com sucesso.',
-                'cookies' => $_COOKIE
-            ));
-        } else {
-            // Cookie presente, mas o WordPress não autenticou o usuário
-            return rest_ensure_response(array(
-                'logged_in' => false,
-                'message' => 'Cookie de login presente, mas o WordPress não autenticou o usuário.',
-                'cookies' => $_COOKIE
-            ));
-        }
-    } else {
-        // Cookie de login não presente
-        return rest_ensure_response(array(
-            'logged_in' => false,
-            'message' => 'Cookie de login não detectado.',
-            'cookies' => $_COOKIE
-        ));
-    }
-}
 
 // ==========================================
 // Registro da Rota para Retorno de dados da Conta de Usuário
@@ -264,19 +196,6 @@ function get_user_data(WP_REST_Request $request) {
 
     if (empty($user->ID)) {
         return new WP_Error('no_user', 'Usuário não encontrado', array('status' => 404));
-    }
-
-    // Verificar se o usuário tem assinaturas ativas e obter a data da próxima expiração
-    $subscriptions = wcs_get_users_subscriptions($user->ID);
-    $has_active_subscription = false;
-    $next_expiration_date = null;
-
-    foreach ($subscriptions as $subscription) {
-        if ($subscription->has_status('active')) {
-            $has_active_subscription = true;
-            $next_expiration_date = $subscription->get_date('next_payment');
-            break;
-        }
     }
 
     $user_data = array(
@@ -303,13 +222,14 @@ function get_user_data(WP_REST_Request $request) {
         'first_name' => get_user_meta($user->ID, 'billing_first_name', true),
         'id' => $user->ID,
         'indicadores' => array(
-            'has_active_subscription' => $has_active_subscription,
-            'next_expiration_date' => $next_expiration_date,
             'nivel_assinatura' => get_user_meta($user->ID, 'nivel_assinatura', true),
-            'speed_flow' => get_user_meta($user->ID, 'speed_flow', true),
-            'liquidity_tracker' => get_user_meta($user->ID, 'liquidity_tracker', true),
-            'master_flow' => get_user_meta($user->ID, 'master_flow', true),
-            'target_vision' => get_user_meta($user->ID, 'target_vision', true),
+            'sku_01' => get_user_meta($user->ID, 'sku_01', true),
+            'sku_02' => get_user_meta($user->ID, 'sku_02', true),
+            'sku_03' => get_user_meta($user->ID, 'sku_03', true),
+            'sku_04' => get_user_meta($user->ID, 'sku_04', true),
+            'sku_05' => get_user_meta($user->ID, 'sku_05', true),
+            'sku_06' => get_user_meta($user->ID, 'sku_06', true),
+            'sku_07' => get_user_meta($user->ID, 'sku_07', true),
         ),
         'last_name' => get_user_meta($user->ID, 'billing_last_name', true),
         'role' => $user->roles[0],
@@ -436,47 +356,81 @@ function custom_edit_address(WP_REST_Request $request) {
     ));
 }
 
-// ==========================================
-// Função para salvar os campos de CPF, CNPJ, Tipo de Pessoa, Número, Complemento e Bairro via API REST
-// ==========================================
-function save_custom_billing_fields_via_api($customer, $data) {
-    $user_id = $customer->get_id();
+add_action( 'wp_default_scripts', function($scripts){ if(!is_user_logged_in()) { $scripts->remove('password-strength-meter'); } return $scripts; } );
 
-    // Adicionar logs para depuração
-    error_log('Saving custom billing fields for user ID: ' . $user_id);
-    error_log('Received billing data: ' . print_r($data['billing'], true));
 
-    // Verificar se o campo 'billing' existe e é um array
-    if (isset($data['billing']) && is_array($data['billing'])) {
+function calcular_preco_proporcional($product_id, $data_inscricao) {
+    // Obter o preço original do produto
+    $product = wc_get_product($product_id);
+    $preco_original = $product->get_regular_price();
 
-        // Salvar CPF se estiver presente nos dados enviados
-        if (!empty($data['billing']['billing_cpf'])) {
-            update_user_meta($user_id, 'billing_cpf', sanitize_text_field($data['billing']['billing_cpf']));
-        }
+    // Obter o número de dias no mês atual
+    $dias_no_mes = date('t', strtotime($data_inscricao));
 
-        // Salvar CNPJ se estiver presente nos dados enviados
-        if (!empty($data['billing']['billing_cnpj'])) {
-            update_user_meta($user_id, 'billing_cnpj', sanitize_text_field($data['billing']['billing_cnpj']));
-        }
+    // Calcular o preço diário
+    $preco_diario = $preco_original / $dias_no_mes;
 
-        // Salvar Tipo de Pessoa se estiver presente nos dados enviados
-        if (!empty($data['billing']['billing_persontype'])) {
-            update_user_meta($user_id, 'billing_persontype', sanitize_text_field($data['billing']['billing_persontype']));
-        }
-        
-        // Salvar Número, Complemento e Bairro
-        if( isset( $data['billing']['billing_number'] ) ) {
-            update_user_meta( $user_id, 'billing_number', sanitize_text_field( $data['billing']['billing_number'] ) );
-        }
+    // Calcular o dia da inscrição
+    $dia_da_inscricao = date('j', strtotime($data_inscricao));
 
-        if( isset( $data['billing']['billing_address_2'] ) ) {
-            update_user_meta( $user_id, 'billing_address_2', sanitize_text_field( $data['billing']['billing_address_2'] ) );
-        }
+    // Calcular o preço proporcional
+    $dias_restantes = $dias_no_mes - $dia_da_inscricao + 1;
+    $preco_final = $preco_diario * $dias_restantes;
 
-        if( isset( $data['billing']['billing_neighborhood'] ) ) {
-            update_user_meta( $user_id, 'billing_neighborhood', sanitize_text_field( $data['billing']['billing_neighborhood'] ) );
-        }
+    return $preco_final;
+}
+
+function atualizar_preco_no_carrinho($cart) {
+    if (is_admin() && !defined('DOING_AJAX')) return;
+
+    // Iterar pelos itens no carrinho
+    foreach ($cart->get_cart() as $cart_item) {
+        $product_id = $cart_item['product_id'];
+
+        // Suponha que a data de inscrição seja a data atual (você pode ajustar conforme necessário)
+        $data_inscricao = date('Y-m-d');
+
+        // Calcular o preço proporcional
+        $preco_final = calcular_preco_proporcional($product_id, $data_inscricao);
+
+        // Aplicar o preço calculado ao produto no carrinho
+        $cart_item['data']->set_price($preco_final);
     }
 }
-add_action('woocommerce_rest_customer_update', 'save_custom_billing_fields_via_api', 10, 2);
 
+add_action('woocommerce_before_calculate_totals', 'atualizar_preco_no_carrinho', 10, 1);
+
+
+function adicionar_mensagem_validade_checkout($checkout) {
+    // Verificar se há itens no carrinho
+    if (WC()->cart->is_empty()) {
+        return;
+    }
+
+    // Iterar pelos itens no carrinho
+    foreach (WC()->cart->get_cart() as $cart_item) {
+        $product = wc_get_product($cart_item['product_id']);
+        $preco_original = $product->get_regular_price();
+
+        // Calcular o número de dias no mês e o dia atual
+        $dias_no_mes = date('t');
+        $dia_atual = date('j');
+        
+        // Calcular dias restantes e preço proporcional
+        $dias_restantes = $dias_no_mes - $dia_atual + 1;
+        $preco_diario = $preco_original / $dias_no_mes;
+        $preco_proporcional = $preco_diario * $dias_restantes;
+
+        // Gerar a mensagem de validade
+        $mensagem_validade = sprintf(
+            "Este produto é válido até o último dia deste mês. O valor original é R$ %s e você está pagando um valor proporcional de R$ %s referente a %s dias de uso.",
+            number_format($preco_original, 2, ',', '.'),
+            number_format($preco_proporcional, 2, ',', '.'),
+            $dias_restantes
+        );
+
+        // Adicionar a mensagem abaixo do resumo do pedido
+        echo '<tr class="cart-validade"><th colspan="2">' . $mensagem_validade . '</th></tr>';
+    }
+}
+add_action('woocommerce_review_order_after_order_total', 'adicionar_mensagem_validade_checkout');
