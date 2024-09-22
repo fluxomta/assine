@@ -1,0 +1,15 @@
+{
+    "schemaVersion": 2,
+    "dockerfileLines": [
+        "FROM wordpress:latest",
+        "RUN echo \"ServerName localhost\" >> /etc/apache2/apache2.conf",
+        "COPY wp-content /var/www/html/wp-content"
+    ],
+    "containerHttpPort": 80,
+    "notExposeAsWebApp": false,
+    "network": "captain-overlay-network",
+    "volumes": [],
+    "restartPolicy": {
+        "condition": "any"
+    }
+}
