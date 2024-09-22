@@ -43,7 +43,8 @@ $cors_manager = new CORS_Manager(array(
     'https://develop-indicadores.server.fluxomta.com',
     'https://dashboard.server.fluxomta.com',
     'https://dashboard.fluxomta.com',
-    'https://assine.fluxomta.com'
+    'https://assine.fluxomta.com',
+    'https://assine-developer-wordpress.server.fluxomta.com'
 ));
 
 // Registra a ação de inicialização para adicionar os cabeçalhos CORS
