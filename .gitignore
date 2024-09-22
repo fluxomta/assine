@@ -43,6 +43,5 @@ composer.lock
 #extras
 .env
 .lando.yml
-captain-definition
 composer.json
 wordpress-backup.tar.gz
