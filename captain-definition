@@ -5,7 +5,8 @@
         "RUN apt-get update && apt-get install -y git",
         "ARG GIT_PAT",
         "RUN git clone https://${GIT_PAT}@github.com/fluxomta/assine.git /tmp/assine",
-        "RUN cp -r /tmp/assine/wp-content /var/www/html/wp-content",
+        "RUN mkdir -p /var/www/html/wp-content",
+        "RUN cp -r /tmp/assine/wp-content/* /var/www/html/wp-content/",
         "RUN rm -rf /tmp/assine"
     ],
     "containerHttpPort": 80,
