@@ -19,7 +19,7 @@
 
 <?php wp_body_open(); ?>
 
-<div class="relative z-50 w-full h-16 md:h-20 hidden">
+<div class="relative z-50 w-full h-16 md:h-20">
 	<header class="relative z-20 w-full h-full bg-primary-500 border-b border-b-secondary-500">
 		<div class='flex items-center justify-between max-w-6xl py-4 mx-auto text-white h-full'>
 			<div class="flex items-center w-[130px] h-auto">
