@@ -1,17 +1,16 @@
-# Wordpress - ignore core, configuration, examples, uploads and logs.
-# https://github.com/github/gitignore/blob/main/WordPress.gitignore
+# Ignorar tudo no wp-content exceto wp-content/plugins e wp-content/themes
+/wp-content/*
+!/wp-content/plugins/
+!/wp-content/themes/
 
-# Core
-#
-# Note: if you want to stage/commit WP core files
-# you can delete this whole section/until Configuration.
-/wp-admin/
-/wp-content/index.php
-/wp-content/languages
+# Plugins e temas específicos que você não quer subir
 /wp-content/plugins/index.php
 /wp-content/themes/index.php
 /wp-content/themes/fluxo-mta/node_modules
 /wp-content/themes/fluxo-mta/package-lock.json
+
+# Ignorar tudo o que não seja wp-plugins e wp-themes
+/wp-admin/
 /wp-includes/
 /index.php
 /license.txt
@@ -19,19 +18,19 @@
 /wp-*.php
 /xmlrpc.php
 
-# Configuration
+# Configurações
 wp-config.php
 
-# Example themes
+# Temas de exemplo
 /wp-content/themes/twenty*/
 
-# Example plugin
+# Plugin de exemplo
 /wp-content/plugins/hello.php
 
 # Uploads
 /wp-content/uploads/
 
-# Log files
+# Arquivos de log
 *.log
 
 # htaccess
@@ -41,14 +40,9 @@ wp-config.php
 /vendor
 composer.lock
 
-# All plugins
-#
-# Note: If you wish to whitelist plugins,
-# uncomment the next line
-#/wp-content/plugins
-
-# All themes
-#
-# Note: If you wish to whitelist themes,
-# uncomment the next line
-#/wp-content/themes
+#extras
+.env
+.lando.yml
+captain-definition
+composer.json
+wordpress-backup.tar.gz
