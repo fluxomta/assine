@@ -11,7 +11,7 @@ class CORS_Manager {
     public function add_cors_http_header() {
         if (isset($_SERVER['HTTP_ORIGIN'])) {
             $origin = $_SERVER['HTTP_ORIGIN'];
-            if (in_array($origin, $this->allowed_origins)) {
+            if (in_array($origin, $this->allowed_origins) || $origin === 'null') {
                 header("Access-Control-Allow-Origin: $origin");
                 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
                 header("Access-Control-Allow-Credentials: true");
@@ -26,12 +26,9 @@ class CORS_Manager {
 
     // Trata a solicitação preflight para métodos e cabeçalhos permitidos
     private function handle_preflight() {
-        if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD'])) {
-            header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
-        }
-        if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS'])) {
-            header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
-        }
+        header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+        header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
+        header("Access-Control-Allow-Origin: *"); // Permitir qualquer origem na preflight
         exit(0);
     }
 }
@@ -44,7 +41,7 @@ $cors_manager = new CORS_Manager(array(
     'https://dashboard.server.fluxomta.com',
     'https://dashboard.fluxomta.com',
     'https://assine.fluxomta.com',
-    'https://assine-developer-wordpress.server.fluxomta.com'
+    'https://assine-developer-wordpress.server.fluxomta.com',
 ));
 
 // Registra a ação de inicialização para adicionar os cabeçalhos CORS
