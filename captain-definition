@@ -6,8 +6,8 @@
         "ARG GIT_PAT",
         "RUN git clone https://${GIT_PAT}@github.com/fluxomta/assine.git /tmp/assine",
         "RUN mkdir -p /var/www/html/wp-content",
-        "RUN [ ! -d /var/www/html/wp-content/plugins ] || [ -z \"$(ls -A /var/www/html/wp-content/plugins)\" ] && cp -r /tmp/assine/wp-content/plugins /var/www/html/wp-content/plugins || echo 'Plugins already present, skipping copy'",
-        "RUN [ ! -d /var/www/html/wp-content/themes ] || [ -z \"$(ls -A /var/www/html/wp-content/themes)\" ] && cp -r /tmp/assine/wp-content/themes /var/www/html/wp-content/themes || echo 'Themes already present, skipping copy'",
+        "RUN cp -r /tmp/assine/wp-content/plugins/* /var/www/html/wp-content/plugins/ || true",
+        "RUN cp -r /tmp/assine/wp-content/themes/* /var/www/html/wp-content/themes/ || true",
         "RUN rm -rf /tmp/assine",
         "RUN chown -R www-data:www-data /var/www/html/wp-content"
     ],
