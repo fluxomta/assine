@@ -1,21 +1,23 @@
+# Use a imagem oficial do WordPress como base
 FROM wordpress:latest
 
-# Instala git
+# Instala git para clonar o repositório
 RUN apt-get update && apt-get install -y git
 
-# Clona o repositório com o token de acesso
+# Define um argumento de build para o token de acesso do GitHub
 ARG GIT_PAT
+
+# Clona o repositório no diretório temporário
 RUN git clone https://${GIT_PAT}@github.com/fluxomta/assine.git /tmp/assine
 
-# Cria a pasta wp-content, se não existir
-RUN mkdir -p /var/www/html/wp-content
+# Remove a pasta wp-content padrão
+RUN rm -rf /var/www/html/wp-content
 
-# Copia apenas os plugins e temas
-RUN cp -r /tmp/assine/wp-content/plugins /var/www/html/wp-content/plugins
-RUN cp -r /tmp/assine/wp-content/themes /var/www/html/wp-content/themes
+# Copia a wp-content do repositório para o diretório do WordPress
+RUN cp -r /tmp/assine/wp-content /var/www/html/wp-content
 
-# Remove o repositório clonado para limpar espaço
-RUN rm -rf /tmp/assine
-
-# Ajusta permissões
+# Ajusta as permissões
 RUN chown -R www-data:www-data /var/www/html/wp-content
+
+# Limpa o diretório temporário
+RUN rm -rf /tmp/assine
