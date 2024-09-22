@@ -1,25 +1,31 @@
 <?php
-function add_cors_http_header() {
-    $allowed_origins = [
-        'https://indicadores.fluxomta.com',
-        'http://localhost:3000',
-        'https://develop-indicadores.server.fluxomta.com',
-        'https://dashboard.server.fluxomta.com',
-        'https://dashboard.fluxomta.com',
-        'https://assine.fluxomta.com'
-    ];
+// Define a classe responsável por gerenciar as configurações CORS
+class CORS_Manager {
+    private $allowed_origins;
 
-    if (isset($_SERVER['HTTP_ORIGIN'])) {
-        $origin = $_SERVER['HTTP_ORIGIN'];
-        if (in_array($origin, $allowed_origins)) {
-            header("Access-Control-Allow-Origin: $origin");
-            header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
-            header("Access-Control-Allow-Credentials: true");
-            header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
+    public function __construct($allowed_origins = array()) {
+        $this->allowed_origins = $allowed_origins;
+    }
+
+    // Adiciona os cabeçalhos CORS conforme necessário
+    public function add_cors_http_header() {
+        if (isset($_SERVER['HTTP_ORIGIN'])) {
+            $origin = $_SERVER['HTTP_ORIGIN'];
+            if (in_array($origin, $this->allowed_origins)) {
+                header("Access-Control-Allow-Origin: $origin");
+                header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+                header("Access-Control-Allow-Credentials: true");
+                header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
+            }
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+            $this->handle_preflight();
         }
     }
 
-    if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+    // Trata a solicitação preflight para métodos e cabeçalhos permitidos
+    private function handle_preflight() {
         if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD'])) {
             header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
         }
@@ -29,4 +35,16 @@ function add_cors_http_header() {
         exit(0);
     }
 }
-add_action('init', 'add_cors_http_header');
+
+// Instancia a classe CORS_Manager e passa os domínios permitidos
+$cors_manager = new CORS_Manager(array(
+    'https://indicadores.fluxomta.com',
+    'http://localhost:3000',
+    'https://develop-indicadores.server.fluxomta.com',
+    'https://dashboard.server.fluxomta.com',
+    'https://dashboard.fluxomta.com',
+    'https://assine.fluxomta.com'
+));
+
+// Registra a ação de inicialização para adicionar os cabeçalhos CORS
+add_action('init', array($cors_manager, 'add_cors_http_header'));

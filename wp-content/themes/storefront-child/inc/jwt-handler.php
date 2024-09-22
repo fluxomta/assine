@@ -24,23 +24,4 @@ class JWT_Handler {
             return new WP_Error('invalid_user', 'Usuário inválido.', array('status' => 400));
         }
 
-        $token = array(
-            'iss' => get_bloginfo('url'),
-            'iat' => time(),
-            'nbf' => time(),
-            'exp' => time() + (7 * DAY_IN_SECONDS),
-            'data' => array(
-                'user' => array(
-                    'id' => $user->ID,
-                    'username' => $user->user_login,
-                    'email' => $user->user_email,
-                ),
-            ),
-        );
-
-        return $this->jwt_encode($token);
-    }
-}
-
-// Uso
-$jwt_handler = new JWT_Handler(JWT_AUTH_SECRET_KEY);
+       
