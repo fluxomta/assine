@@ -8,7 +8,8 @@
         "RUN rm -rf /var/www/html/wp-content",
         "RUN mv /tmp/assine/wp-content /var/www/html/wp-content",
         "RUN chown -R www-data:www-data /var/www/html/wp-content",
-        "RUN rm -rf /tmp/assine"
+        "RUN rm -rf /tmp/assine",
+        "VOLUME [\"/var/www/html/wp-content\"]"
     ],
     "containerHttpPort": 80,
     "notExposeAsWebApp": false,
