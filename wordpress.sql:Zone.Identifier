@@ -1,0 +1,4 @@
+[ZoneTransfer]
+ZoneId=3
+ReferrerUrl=https://adminer.server.fluxomta.com/?server=srv-captain--assinantes-db%3A3306&username=wordpressuser&db=wordpress&dump=
+HostUrl=https://adminer.server.fluxomta.com/?server=srv-captain--assinantes-db%3A3306&username=wordpressuser&db=wordpress&dump=

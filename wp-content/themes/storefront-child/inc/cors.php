@@ -46,6 +46,7 @@ $cors_manager = new CORS_Manager(array(
     'https://dashboard.server.fluxomta.com',
     'https://dashboard.fluxomta.com',
     'https://assine.fluxomta.com',
+    'https://assinantes.lndo.site',
     'https://assine-developer-wordpress.server.fluxomta.com',
 ));
 
