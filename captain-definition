@@ -5,8 +5,9 @@
         "RUN apt-get update && apt-get install -y git",
         "ARG GIT_PAT",
         "RUN git clone https://${GIT_PAT}@github.com/fluxomta/assine.git /tmp/assine",
+        "RUN ls -la /tmp/assine/wp-content", // Verifica o conteúdo clonado
         "RUN rm -rf /var/www/html/wp-content",
-        "RUN mv /tmp/assine/wp-content /var/www/html/wp-content",
+        "RUN cp -R /tmp/assine/wp-content /var/www/html/",
         "RUN chown -R www-data:www-data /var/www/html/wp-content",
         "RUN rm -rf /tmp/assine",
         "VOLUME [\"/var/www/html/wp-content\"]"
