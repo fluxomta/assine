@@ -1,6 +1,16 @@
 {
     "schemaVersion": 2,
-    "dockerfilePath": "./Dockerfile",
+    "dockerfileLines": [
+        "FROM wordpress:latest",
+        "RUN apt-get update && apt-get install -y git",
+        "ARG GIT_PAT",
+        "RUN git clone https://${GIT_PAT}@github.com/fluxomta/assine.git /tmp/assine",
+        "RUN mkdir -p /var/www/html/wp-content",
+        "RUN cp -r /tmp/assine/wp-content/plugins /var/www/html/wp-content/plugins",
+        "RUN cp -r /tmp/assine/wp-content/themes /var/www/html/wp-content/themes",
+        "RUN rm -rf /tmp/assine",
+        "RUN chown -R www-data:www-data /var/www/html/wp-content"
+    ],
     "containerHttpPort": 80,
     "notExposeAsWebApp": false,
     "network": "captain-overlay-network",
