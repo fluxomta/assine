@@ -71,13 +71,6 @@ p#billing_state_field{
 }
 
 /* Order */
-.order_details{
-    @apply bg-primary-500 text-white !important;
-}
-.order_details:before, .order_details:after{
-    background: -webkit-linear-gradient(transparent 0, transparent 0), -webkit-linear-gradient(135deg, #1f1f1f 33.33%, transparent 33.33%), -webkit-linear-gradient(45deg, #1f1f1f 33.33%, transparent 33.33%) !important;
-    background-size: 0 100%, 16px 16px, 16px 16px !important;
-}
 
 .alert-bg{
     @apply pt-4 pb-2 rounded-t-md !important;
