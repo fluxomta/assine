@@ -3,7 +3,10 @@
     "dockerfileLines": [
         "FROM wordpress:latest",
         "RUN echo \"ServerName localhost\" >> /etc/apache2/apache2.conf",
-        "COPY wp-content /var/www/html/wp-content"
+        "RUN apt-get update && apt-get install -y git",
+        "RUN git clone git@github.com:fluxomta/assine.git /tmp/assine",
+        "RUN cp -r /tmp/assine/wp-content /var/www/html/wp-content",
+        "RUN rm -rf /tmp/assine"
     ],
     "containerHttpPort": 80,
     "notExposeAsWebApp": false,
