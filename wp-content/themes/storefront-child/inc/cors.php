@@ -11,14 +11,18 @@ class CORS_Manager {
     public function add_cors_http_header() {
         if (isset($_SERVER['HTTP_ORIGIN'])) {
             $origin = $_SERVER['HTTP_ORIGIN'];
-            if (in_array($origin, $this->allowed_origins) || $origin === 'null') {
+            if (in_array($origin, $this->allowed_origins)) {
                 header("Access-Control-Allow-Origin: $origin");
                 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
                 header("Access-Control-Allow-Credentials: true");
                 header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
+            } else {
+                // Se a origem não for permitida, não define o cabeçalho 'Access-Control-Allow-Origin'
+                return;
             }
         }
 
+        // Lidar com requisições OPTIONS (preflight)
         if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
             $this->handle_preflight();
         }
@@ -29,6 +33,7 @@ class CORS_Manager {
         header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
         header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
         header("Access-Control-Allow-Origin: *"); // Permitir qualquer origem na preflight
+        header("Access-Control-Max-Age: 86400"); // 24 horas
         exit(0);
     }
 }
@@ -45,4 +50,4 @@ $cors_manager = new CORS_Manager(array(
 ));
 
 // Registra a ação de inicialização para adicionar os cabeçalhos CORS
-add_action('init', array($cors_manager, 'add_cors_http_header'));
+add_action('rest_api_init', array($cors_manager, 'add_cors_http_header'), 15);
