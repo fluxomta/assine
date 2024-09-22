@@ -1,25 +1,31 @@
 # Copyright (C) 2023
 # This file is distributed under the same license as the PagBank for WooCommerce plugin.
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PagBank for WooCommerce 0.0.2\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/pagbank-for-woocommerce\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/pagbank-for-"
+"woocommerce\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-06-12T22:40:32+00:00\n"
+"POT-Creation-Date: 2024-09-20 17:52+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.7.1\n"
+"X-Generator: Loco https://localise.biz/\n"
 "X-Domain: pagbank-for-woocommerce\n"
+"\n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;"
 
 #. Plugin Name of the plugin
 msgid "PagBank for WooCommerce"
 msgstr ""
 
 #. Description of the plugin
-msgid "Setup credit card payments with one-click buy, boleto and Pix on checkout."
+msgid ""
+"Setup credit card payments with one-click buy, boleto and Pix on checkout."
 msgstr ""
 
 #: src/core/Gateways/BoletoPaymentGateway.php:59
@@ -134,7 +140,8 @@ msgstr ""
 #: src/core/Gateways/BoletoPaymentGateway.php:133
 #: src/core/Gateways/CreditCardPaymentGateway.php:237
 #: src/core/Gateways/PixPaymentGateway.php:131
-msgid "Isso irá ativar os logs para depuração para auxiliar em caso de suporte."
+msgid ""
+"Isso irá ativar os logs para depuração para auxiliar em caso de suporte."
 msgstr ""
 
 #: src/core/Gateways/BoletoPaymentGateway.php:164
@@ -168,7 +175,9 @@ msgid "Habilitar cartão de crédito"
 msgstr ""
 
 #: src/core/Gateways/CreditCardPaymentGateway.php:156
-msgid "Escolha um cartão de crédito salvo ou preencha os dados do seu cartão de crédito no formulário abaixo:"
+msgid ""
+"Escolha um cartão de crédito salvo ou preencha os dados do seu cartão de "
+"crédito no formulário abaixo:"
 msgstr ""
 
 #: src/core/Gateways/CreditCardPaymentGateway.php:160
@@ -201,7 +210,10 @@ msgid "Ativar repasse de juros"
 msgstr ""
 
 #: src/core/Gateways/CreditCardPaymentGateway.php:201
-msgid "Isso irá ativar o repasse de juros durante o checkout. Por padrão as parcelas serão sem juros. Isso irá liberar a opção de definir a quantidade de parcelas sem juros."
+msgid ""
+"Isso irá ativar o repasse de juros durante o checkout. Por padrão as "
+"parcelas serão sem juros. Isso irá liberar a opção de definir a quantidade "
+"de parcelas sem juros."
 msgstr ""
 
 #: src/core/Gateways/CreditCardPaymentGateway.php:214
@@ -261,7 +273,8 @@ msgid "O \"card_bin\" ou \"payment_token\" é obrigatório."
 msgstr ""
 
 #: src/core/Gateways/CreditCardPaymentGateway.php:351
-msgid "Você não pode enviar o \"card_bin\" e o \"payment_token\" ao mesmo tempo."
+msgid ""
+"Você não pode enviar o \"card_bin\" e o \"payment_token\" ao mesmo tempo."
 msgstr ""
 
 #: src/core/Gateways/CreditCardPaymentGateway.php:370
@@ -297,11 +310,15 @@ msgid "O titular do cartão de crédito é obrigatório."
 msgstr ""
 
 #: src/core/Gateways/CreditCardPaymentGateway.php:543
-msgid "O cartão de crédito criptografado não foi identificado. Por favor, contate o suporte."
+msgid ""
+"O cartão de crédito criptografado não foi identificado. Por favor, contate o "
+"suporte."
 msgstr ""
 
 #: src/core/Gateways/CreditCardPaymentGateway.php:550
-msgid "O bin do cartão de crédito não foi identificado. Por favor, contate o suporte."
+msgid ""
+"O bin do cartão de crédito não foi identificado. Por favor, contate o "
+"suporte."
 msgstr ""
 
 #: src/core/Gateways/CreditCardPaymentGateway.php:558
@@ -389,8 +406,7 @@ msgstr ""
 msgid "ID da aplicação inválida."
 msgstr ""
 
-#: src/core/Presentation/Api.php:202
-#: src/core/Presentation/Api.php:265
+#: src/core/Presentation/Api.php:202 src/core/Presentation/Api.php:265
 msgid "Status HTTP inválido."
 msgstr ""
 
@@ -414,15 +430,15 @@ msgid "PagBank"
 msgstr ""
 
 #: src/core/Presentation/ApiHelpers.php:337
-msgid "O cartão de crédito criptografado é inválido. Por favor, contate o suporte."
+msgid ""
+"O cartão de crédito criptografado é inválido. Por favor, contate o suporte."
 msgstr ""
 
 #: src/core/Presentation/ApiHelpers.php:351
 msgid "O token de pagamento não foi encontrado."
 msgstr ""
 
-#: src/core/Presentation/Hooks.php:78
-#: src/core/Presentation/Hooks.php:97
+#: src/core/Presentation/Hooks.php:78 src/core/Presentation/Hooks.php:97
 msgid "Cartão de crédito"
 msgstr ""
 
@@ -490,6 +506,9 @@ msgstr ""
 
 #: src/templates/payment-instructions-boleto.php:22
 #: src/templates/payment-instructions-pix.php:21
+msgctxt ""
+"Quando finalizar a transação, atualize essa página para ter acesso ao seu "
+"indicador."
 msgid "Quando finalizar a transação, você pode retornar à tela inicial."
 msgstr ""
 
@@ -514,7 +533,9 @@ msgid "Copie o código abaixo. Em seguida, você precisará:"
 msgstr ""
 
 #: src/templates/payment-instructions-pix.php:12
-msgid "Abrir o aplicativo ou site do seu banco e selecionar a opção \"Pagar com Pix\""
+msgid ""
+"Abrir o aplicativo ou site do seu banco e selecionar a opção \"Pagar com "
+"Pix\""
 msgstr ""
 
 #: src/templates/payment-instructions-pix.php:13

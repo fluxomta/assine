@@ -23,5 +23,9 @@
 	</div>
 	<hr />
 	<h3><?php esc_html_e('Quando o pagamento for concluído', 'pagbank-for-woocommerce'); ?></h3>
-	<p><?php esc_html_e('Quando finalizar a transação, você pode retornar à tela inicial.', 'pagbank-for-woocommerce'); ?></p>
+	<p><?php esc_html_e('Quando finalizar a transação, recarregue essa página para ver visualizar as infos da sua compra.', 'pagbank-for-woocommerce'); ?></p>
+	<p>
+		<a href="javascript:void(0);" class="button" onclick="location.reload();">Pagamento realizado - Recarregar a página</a>
+
+	</p>
 </div>
